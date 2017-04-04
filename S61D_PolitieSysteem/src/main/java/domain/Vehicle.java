@@ -6,8 +6,10 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -21,15 +23,27 @@ public class Vehicle implements Serializable{
     @Id
     private String licensePlate;
     
+    
 
     @ManyToOne
     private Driver owner;
+    
+    @ManyToMany
+    private List<Driver> previousOwners;
 
     public Vehicle() {
     }
 
     public Vehicle(String licensePlate) {
         this.licensePlate = licensePlate;
+    }
+
+    public List<Driver> getPreviousOwners() {
+        return previousOwners;
+    }
+
+    public void setPreviousOwners(List<Driver> previousOwners) {
+        this.previousOwners = previousOwners;
     }
 
     public String getLicensePlate() {

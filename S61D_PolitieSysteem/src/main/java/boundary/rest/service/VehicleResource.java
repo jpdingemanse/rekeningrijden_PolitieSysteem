@@ -45,4 +45,10 @@ public class VehicleResource {
     public List<Vehicle> getAllVehicle(@PathParam("id")int id){
         return vehicleService.getVehicleByOwner(id);
     }
+    
+    @GET
+    @Path("GetVehicle/{license}")
+    public Vehicle getVehicleByLicense(@PathParam("license")String license){
+        return vehicleService.getVehicleByLicense(license);
+    }
 }

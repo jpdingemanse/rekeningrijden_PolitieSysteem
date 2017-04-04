@@ -32,4 +32,8 @@ public class VehicleService {
         return vehicleDAO.getVehicleByOwner(id);
     }
     
+    public Vehicle getVehicleByLicense(String license){
+        return vehicleDAO.getVehicleByLicense(license);
+    }
+    
 }

@@ -32,6 +32,9 @@ public class VehicleDAO {
         return em.find(Vehicle.class, vehicle.getLicensePlate());
     }   
     
+    public Vehicle getVehicleByLicense(String license){
+        return em.find(Vehicle.class, license);
+    }
     
     public Vehicle addVehicleToDriver(Vehicle vehicle){
         Vehicle tempResult = em.find(Vehicle.class, vehicle.getLicensePlate());
