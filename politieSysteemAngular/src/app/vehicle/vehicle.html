@@ -1,0 +1,91 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h1 class="panel-title" style="font-size:30px; text-align: center;">Voertuig</h1>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-2">
+                <input #textbox type="text" placeholder="Kenteken nummer" />
+            </div>
+            <div class="col-lg-1">
+                <button (click)="onclickSearch(textbox.value)">Zoek</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="mytable" class="table table-bordred table-striped">
+                        <thead>
+                            <th>Kentekennummer</th>
+                            <th>AutorisatieCode</th>
+                            <th>Eigenaar</th>
+                            <th>Tracker</th>
+                            <th>Gestolen</th>
+                            <th>Markeer gestolen</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let v of availableVehicleList">
+                                <td>{{v.licensePlate}}</td>
+                                <td>{{v.autorisatieCode}}</td>
+                                <td *ngIf="v.owner != null">{{v.owner.name}}</td>
+                                <td *ngIf="v.owner == null">empty</td>
+                                <td *ngIf="v.tracker != null">{{v.tracker.id}}</td>
+                                <td *ngIf="v.tracker == null">empty</td>
+                                <td>{{v.stolen}} </td>
+                                <td>
+                                    <p data-placement="top" data-toggle="tooltip" title="Wijzig"><button class="btn btn-primary btn-xs" (click)="setStolen(v)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></p>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div bsModal #editAutorisatieCodeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Large modal</h4>
+                    <button type="button" class="close pull-right" (click)="editAutorisatieCodeModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <car-edit-dialog></car-edit-dialog>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <!--<div bsModal #addTrackerCModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Large modal</h4>
+                    <button type="button" class="close pull-right" (click)="addTrackerCModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <tracker-dialog></tracker-dialog>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+</div>
