@@ -56,6 +56,10 @@ overflow: hidden;
     font-size: smaller;
 }
 
+.sebm-google-map-container {
+  height: 300px;
+}
+
 .post-content {
     margin-left:58px;
 }

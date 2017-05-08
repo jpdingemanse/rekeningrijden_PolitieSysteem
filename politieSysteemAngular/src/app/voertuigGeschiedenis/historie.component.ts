@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 
-import { VehicleService } from './../rest/vehicle.service';
+import { HistoryService } from './../rest/history.Service';
 import { Driver } from './../domain/driver';
 import { Vehicle } from './../domain/vehicle';
 import { History } from './../domain/history';
@@ -13,14 +13,13 @@ import { History } from './../domain/history';
 export class HistoryPageComponent implements OnInit {
     ngOnInit(): void {
     }
-    vehicleSearch : Vehicle;
+    
     historySearch : History[];
 
-    constructor(private vehicleService : VehicleService) { }
+    constructor(private historyService : HistoryService) { }
 
     onclickSearch(license: String) {
-        this.vehicleService.getVehicleByLicenseplate(license)
-            .then(value => this.vehicleSearch = value)
-            .then(() => { this.historySearch = this.vehicleSearch.history })
+        this.historyService.getHistoryByLicenseplate(license)
+            .then(value => this.historySearch = value)
     }
 }

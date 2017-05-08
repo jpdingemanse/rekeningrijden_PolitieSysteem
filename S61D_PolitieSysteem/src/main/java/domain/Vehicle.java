@@ -6,12 +6,15 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -26,20 +29,23 @@ public class Vehicle implements Serializable{
     @Id
     private String licensePlate;
     private String autorisatieCode;
-    private boolean stolen;
+    private boolean isStolen;
     @ManyToOne
     private Driver owner;
     @OneToOne
-    @JoinColumn(name = "trackerId")
+    @JoinColumn(name = "TrackerId")
     private Tracker tracker;
-
+    @OneToMany
+    private List<History> history;
+    
     public Vehicle() {
     }
 
     public Vehicle(String licensePlate, Tracker tracker) {
         this.licensePlate = licensePlate;
         this.tracker = tracker;
-        this.stolen = false;
+        this.history = new ArrayList();
+        this.isStolen = false;
     }
 
     public String getAutorisatieCode() {
@@ -50,12 +56,12 @@ public class Vehicle implements Serializable{
         this.autorisatieCode = autorisatieCode;
     }
 
-    public boolean isStolen() {
-        return stolen;
+    public boolean isIsStolen() {
+        return isStolen;
     }
 
-    public void setStolen(boolean stolen) {
-        this.stolen = stolen;
+    public void setIsStolen(boolean isStolen) {
+        this.isStolen = isStolen;
     }
     
     public String getLicensePlate() {
@@ -81,4 +87,13 @@ public class Vehicle implements Serializable{
     public void setTracker(Tracker tracker) {
         this.tracker = tracker;
     }
+
+    public List<History> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<History> history) {
+        this.history = history;
+    }
 }
+

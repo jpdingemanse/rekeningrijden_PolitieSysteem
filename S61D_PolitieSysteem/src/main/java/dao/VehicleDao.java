@@ -27,10 +27,10 @@ public class VehicleDao {
     public void createStolenVehicle(Vehicle vehicle){
         Vehicle tempV = em.find(Vehicle.class, vehicle.getLicensePlate());
         if(tempV == null){
-            vehicle.setStolen(true);
+            vehicle.setIsStolen(true);
             em.persist(vehicle);
         } else {
-            tempV.setStolen(true);
+            tempV.setIsStolen(true);
             em.merge(tempV);
         }
     }
