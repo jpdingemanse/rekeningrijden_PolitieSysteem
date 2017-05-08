@@ -1,5 +1,6 @@
 import { Driver } from "app/domain/driver";
 import { Tracker } from "app/domain/tracker";
+import { History } from "app/domain/history";
 
 export class Vehicle {
     public licensePlate: string;
@@ -7,6 +8,7 @@ export class Vehicle {
     public owner: Driver;
     public tracker: Tracker;
     public stolen: boolean;
+    public history: History[];
     constructor() { }
 
     setDriver(driver: Driver) {
@@ -23,5 +25,8 @@ export class Vehicle {
     }
     setStolen(isStolen: boolean){
         this.stolen = isStolen;
+    }
+    setHistory(history: History[]){
+        this.history = history;
     }
 }

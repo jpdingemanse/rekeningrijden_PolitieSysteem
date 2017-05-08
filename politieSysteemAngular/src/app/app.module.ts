@@ -12,7 +12,7 @@ import { NavbarLeftComponent } from './navbar/navbarLeft.component';
 import { VehiclePageComponent } from './vehicle/vehicle.component';
 
 import { LoginComponent } from './login/login.component';
-import { HistoriePageComponent } from "app/voertuigGeschiedenis/historie.component";
+import { HistoryPageComponent } from "app/voertuigGeschiedenis/historie.component";
 import { VehicleService } from './rest/vehicle.service';
 import { UserService } from './rest/user.Service';
 import { DriverService } from './rest/driver.Service';
@@ -26,7 +26,7 @@ import { LoginService } from './global/login.Service';
     AppComponent,
     NavbarTopComponent,
     NavbarLeftComponent,
-    HistoriePageComponent,
+    HistoryPageComponent,
     VehiclePageComponent,
     LoginComponent
   ],

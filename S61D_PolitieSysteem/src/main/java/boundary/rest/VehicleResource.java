@@ -38,10 +38,4 @@ public class VehicleResource {
         vehicleService.createStolenVehicle(vehicle);
         return vehicle;
     }
-    
-//    @GET
-//    @Path("GetAllVehicles")
-//    public List<Vehicle> getAllVehicles(){
-//        return vehicleService.getAllVehicles();
-//    }
 }

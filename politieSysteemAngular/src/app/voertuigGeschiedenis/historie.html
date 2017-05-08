@@ -1,0 +1,42 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h1 class="panel-title" style="font-size:30px; text-align: center;">Gesschiedenis</h1>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-2">
+                <input #textbox type="text" placeholder="Kenteken nummer" />
+            </div>
+            <div class="col-lg-1">
+                <button (click)="onclickSearch(textbox.value)">Zoek</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="mytable" class="table table-bordred table-striped">
+                        <thead>
+                            <th>Naam</th>
+                            <th>OverschrijvingDatum</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let v of availableVehicleList">
+                                <td>{{v.bestuurder.name}}</td>
+                                <td>{{v.overschrijfDatum}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
