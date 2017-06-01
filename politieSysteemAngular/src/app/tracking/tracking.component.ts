@@ -18,8 +18,8 @@ export class TrackingPageComponent implements OnInit {
     }
     vehicleSearch : Vehicle;
     historySearch : History[];
-    lat: number = 51.452117;
-    lng: number = 5.481302;
+    lat: number = 0;//51.452117;
+    lng: number = 0;//5.481302;
 
     constructor(private vehicleService : VehicleService) { }
 
@@ -27,6 +27,9 @@ export class TrackingPageComponent implements OnInit {
         this.vehicleService.getVehicleByLicenseplate(license)
             .then(value => this.vehicleSearch = value)
             .then(() => { this.historySearch = this.vehicleSearch.history })
+            .then(() => { console.log(this.vehicleSearch)});
+        this.lat = 51.452117;
+        this.lng = 5.481302;
     }
 }
 

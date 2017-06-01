@@ -7,7 +7,7 @@ import { History } from './../domain/history';
 
 @Injectable()
 export class HistoryService {
-    private url = "http://192.168.24.46:8080/S61D_PolitieSysteem/api/History/";
+    private url = "http://192.168.24.45:8080/S61D_PolitieSysteem/api/History/";
     private localurl = "http://localhost:8080/S61D_PolitieSysteem/api/History/";
 
     constructor(private http: Http) { }
@@ -19,7 +19,7 @@ export class HistoryService {
     // }
 
     getHistoryByLicenseplate(license: String): Promise<History[]>{
-         return this.http.get(this.localurl + 'GetHistoryByLicensePlate/' + license)
+         return this.http.get(this.url + 'GetHistoryByLicensePlate/' + license)
                         .toPromise()
                         .then(this.extractData);
     }

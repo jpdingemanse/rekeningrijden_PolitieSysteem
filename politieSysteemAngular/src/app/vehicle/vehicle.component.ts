@@ -34,7 +34,6 @@ export class VehiclePageComponent {
         this.vehicleService.getVehicleByLicenseplate(license)
                            .then(value => this.vehicleSearch = value)
                            .then(() => { this.availableVehicleList.push(this.vehicleSearch) })
-                           
     }
 
     setStolen(value : Vehicle){
