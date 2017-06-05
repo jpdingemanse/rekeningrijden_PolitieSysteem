@@ -31,9 +31,7 @@ public class VehicleService {
     public void createStolenVehicle(Vehicle vehicle){
         vehicleDao.createStolenVehicle(vehicle); 
         StolenVehicle sv = new StolenVehicle(vehicle.getOwner().getIcan(), vehicle.getLicensePlate(), System.currentTimeMillis(), true);
-        TopicConnector.CArigattor(gson.toJson(sv));
-//        TopicConnector tc = new TopicConnector();
-//        tc.TopicListener();
+        //TopicConnector.CArigattor(gson.toJson(sv));
     }
     
     public Vehicle getVehicleByLicensePlate(String licensePlate) {
