@@ -42,6 +42,7 @@ export class VehiclePageComponent {
                            .then(value => this.vehicleSearch = value)
                            .then(() => { this.availableVehicleList.push(this.vehicleSearch) })
                            .then(() => { console.log(value)});
+        console.log(this.availableVehicleList);
     }
 
     onclickShowTrackerModal(){

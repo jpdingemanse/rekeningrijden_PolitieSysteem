@@ -5,9 +5,14 @@
  */
 package service;
 
+import boundary.jms.TopicConnector;
+import com.google.gson.Gson;
 import dao.VehicleDao;
+import domain.StolenVehicle;
 import domain.Vehicle;
 import factory.VehicleTransmitter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -18,16 +23,21 @@ import javax.inject.Inject;
 @Stateless
 public class VehicleService {
     @Inject
-    VehicleDao vehicleDAO;
+    VehicleDao vehicleDao;
     @Inject 
     VehicleTransmitter vehicletm;
+    Gson gson = new Gson();
     
     public void createStolenVehicle(Vehicle vehicle){
-        vehicleDAO.createStolenVehicle(vehicle); 
+        vehicleDao.createStolenVehicle(vehicle); 
+        StolenVehicle sv = new StolenVehicle(vehicle.getOwner().getIcan(), vehicle.getLicensePlate(), System.currentTimeMillis(), true);
+        TopicConnector.CArigattor(gson.toJson(sv));
+//        TopicConnector tc = new TopicConnector();
+//        tc.TopicListener();
     }
     
     public Vehicle getVehicleByLicensePlate(String licensePlate) {
-        Vehicle vehicle = vehicleDAO.getVehicleByLicensePlate(licensePlate);
+        Vehicle vehicle = vehicleDao.getVehicleByLicensePlate(licensePlate);
         if(vehicle==null){
             vehicle = vehicletm.getVehicleByLicenseRekening(licensePlate);
         }

@@ -30,7 +30,7 @@ public Vehicle getVehicleByLicenseRekening(String licenseplate){
         StringBuilder result = new StringBuilder();
         Vehicle vehicle = null;
         try {
-            String url = "http://192.168.24.46:8080/S61D_RekeningAdministratie/api/Vehicle/GetVehicleByLicensePlate/" + licenseplate;
+            String url = "http://localhost:8080/S61D_RekeningAdministratie/api/Vehicle/GetVehicleByLicensePlate/" + licenseplate;
             HttpClient client = new DefaultHttpClient();
             HttpGet request = new HttpGet(url);
 

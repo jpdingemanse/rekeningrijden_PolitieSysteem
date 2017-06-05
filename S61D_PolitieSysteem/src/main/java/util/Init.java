@@ -5,6 +5,7 @@
  */
 package util;
 
+import boundary.jms.TopicConnector;
 import dao.DriverDao;
 import dao.TrackerDao;
 import dao.UserDao;
@@ -40,6 +41,8 @@ public class Init {
         Tracker tracker = trackerDao.createNewTracker(new Tracker("1", 12, 13));
         Tracker tracker1 = trackerDao.createNewTracker(new Tracker("2", 15, 15));
         Tracker tracker2 = trackerDao.createNewTracker(new Tracker("3", 20, 20));
+        TopicConnector tc = new TopicConnector();
+        tc.TopicListener();
     }
     
 }
