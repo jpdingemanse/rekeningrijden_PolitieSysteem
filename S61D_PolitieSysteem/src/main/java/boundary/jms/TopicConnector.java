@@ -7,8 +7,14 @@ package boundary.jms;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSContext;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.Queue;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -22,17 +28,27 @@ public class TopicConnector {
     private static final String JNDI_FACTORY = "jms/myConnectionFactory";
     private static final String JNDI_Topic = "jms/TestTopic";
     
-    public static void sendMessage(String text){
-        Context jndiContext;
+    public static void sendMessage(){
+        
         try {
-            jndiContext = new InitialContext();
+            Context jndiContext = new InitialContext();
             ConnectionFactory cf = (ConnectionFactory) jndiContext.lookup(JNDI_FACTORY);
             Topic topic = (Topic) jndiContext.lookup(JNDI_Topic);
             
-            JMSContext context =  cf.createContext();
-            context.createProducer().send(topic, "JMS 2.0 Hallo dit is een bericht");
-            context.close();
+            Connection connection = cf.createConnection();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer producer = session.createProducer(topic);
+
+            TextMessage message = session.createTextMessage();
+            String tweets = "{ 'text' : 'Queque tweets', 'profile' : { 'id' : 1}}";
+            message.setText(tweets);
+            
+            
+            producer.send(message);
+            connection.close();
         } catch (NamingException ex) {
+            Logger.getLogger(TopicConnector.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JMSException ex) {
             Logger.getLogger(TopicConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
             
