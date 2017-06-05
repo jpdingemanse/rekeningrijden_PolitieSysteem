@@ -5,19 +5,16 @@
  */
 package boundary.jms;
 
+import boundary.bean.MessageBean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSContext;
 import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.Queue;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicSession;
 import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 /**
@@ -25,35 +22,30 @@ import javax.naming.NamingException;
  * @author lino_
  */
 public class TopicConnector {
+
     private static final String JNDI_FACTORY = "jms/myConnectionFactory";
     private static final String JNDI_Topic = "jms/TestTopic";
-    
-    public static void sendMessage(){
-        
-        try {
-            Context jndiContext = new InitialContext();
-            ConnectionFactory cf = (ConnectionFactory) jndiContext.lookup(JNDI_FACTORY);
-            Topic topic = (Topic) jndiContext.lookup(JNDI_Topic);
-            
-            Connection connection = cf.createConnection();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer producer = session.createProducer(topic);
 
-            TextMessage message = session.createTextMessage();
-            String tweets = "{ 'text' : 'Queque tweets', 'profile' : { 'id' : 1}}";
-            message.setText(tweets);
-            
-            
-            producer.send(message);
-            connection.close();
-        } catch (NamingException ex) {
-            Logger.getLogger(TopicConnector.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JMSException ex) {
-            Logger.getLogger(TopicConnector.class.getName()).log(Level.SEVERE, null, ex);
+    public static void sendMessage() {
+
+        Context ctx = getInitialContext();
+        try {
+            TopicConnectionFactory tConFactory = (TopicConnectionFactory) ctx.lookup("weblogic.jms.ConnectionFactory");
+
+            Topic messageTopic = (Topic) ctx.lookup("MessageTopic");
+
+            TopicConnection tCon = tConFactory.createTopicConnection();
+
+            TopicSession session = tCon.createTopicSession(
+                    false, /* not a transacted session */
+                    Session.AUTO_ACKNOWLEDGE
+            );
+        } catch (JMSException | NamingException ex) {
+            Logger.getLogger(MessageBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
     }
-    
+
 //    public static void CArigattor(String text){
 //        try {
 //            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://192.168.24.41:61616");
