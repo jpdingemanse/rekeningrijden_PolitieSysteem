@@ -55,6 +55,12 @@
             <version>4.1.1</version>
             <type>jar</type>
         </dependency>
+<!--        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>5.14.4</version>
+            <type>jar</type>
+        </dependency>-->
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>

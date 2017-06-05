@@ -5,10 +5,7 @@
  */
 package boundary.jms;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.jms.*;
-import javax.xml.bind.Marshaller.Listener;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 /**
@@ -45,7 +42,7 @@ public class TopicConnector {
 //                        if (message instanceof TextMessage) {
 //                            TextMessage textMessage = (TextMessage) message;
 //                            System.out.println("Received message"
-//                                    + textMessage.getText() + "'");  
+//                                    + textMessage.getText() + "'");
 //                        }
 //                    } catch (JMSException e) {
 //                        System.out.println("Caught:" + e);
@@ -60,6 +57,7 @@ public class TopicConnector {
 //            Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
+
     
     public static void CArigattor(String text){
         try {
