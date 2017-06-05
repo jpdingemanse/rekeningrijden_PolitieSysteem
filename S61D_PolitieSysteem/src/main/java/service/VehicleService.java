@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.naming.NamingException;
 
 /**
  *
@@ -28,9 +29,9 @@ public class VehicleService {
     VehicleTransmitter vehicletm;
     Gson gson = new Gson();
     
-    public void createStolenVehicle(Vehicle vehicle){
+    public void createStolenVehicle(Vehicle vehicle) throws NamingException, Exception, Exception{
         vehicleDao.createStolenVehicle(vehicle); 
-        StolenVehicle sv = new StolenVehicle(vehicle.getOwner().getIcan(), vehicle.getLicensePlate(), System.currentTimeMillis(), true);
+        // StolenVehicle sv = new StolenVehicle(vehicle.getOwner().getIcan(), vehicle.getLicensePlate(), System.currentTimeMillis(), true);
         TopicConnector.sendMessage();
     }
     

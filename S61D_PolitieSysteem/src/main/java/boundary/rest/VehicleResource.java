@@ -8,6 +8,7 @@ package boundary.rest;
 import domain.Vehicle;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -34,7 +35,7 @@ public class VehicleResource {
     @POST
     @Path("createStolenVehicle")
     @Consumes("application/json")
-    public Vehicle createStolenVehicle(Vehicle vehicle){
+    public Vehicle createStolenVehicle(Vehicle vehicle) throws NamingException, Exception{
         vehicleService.createStolenVehicle(vehicle);
         return vehicle;
     }
