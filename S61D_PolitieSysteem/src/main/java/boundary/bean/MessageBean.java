@@ -40,26 +40,25 @@ public class MessageBean implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
+        System.out.println("Got message " + message);
         try {
-            System.out.println("Got message " + message);
             fw = new FileWriter(FILENAME);
+        
             bw = new BufferedWriter(fw);
             bw.write("Got message " + message);
-
         } catch (IOException ex) {
             Logger.getLogger(MessageBean.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (bw != null) {
-                    bw.close();
-                }
-                if (fw != null) {
-                    fw.close();
-                }
-            } catch (IOException ex) {
-
-                ex.printStackTrace();
+        }
+        try {
+            if (bw != null) {
+                bw.close();
             }
+            if (fw != null) {
+                fw.close();
+            }
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
         }
     }
 }
