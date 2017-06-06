@@ -31,7 +31,7 @@ import javax.jms.MessageListener;
 })
 public class MessageBean implements MessageListener {
 
-    private static final String FILENAME = "/Users/ruthgervandeneikhof/Desktop/test.txt";
+    private static final String FILENAME = "C:/Users/Administrator/Downloads/test.txt";
     BufferedWriter bw = null;
     FileWriter fw = null;
 
