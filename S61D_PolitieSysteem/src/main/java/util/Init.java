@@ -37,7 +37,7 @@ public class Init {
     @PostConstruct
     public void Init(){
         userDAO.createUser(new User("Administrator", "password"));
-        Driver driver = driverDAO.createNewDriver(new Driver("Lino", "NL12345", "Thaencharun", "5611SH", "Eindhoven", "Lino_thaencharun@hotmail.com", "lino1", "p@33word", "10c", "0614387088"));
+        Driver driver = driverDAO.createNewDriver(new Driver("Lino", "NL 200 000 000 000 001", "Thaencharun", "5611SH", "Eindhoven", "Lino_thaencharun@hotmail.com", "lino1", "p@33word", "10c", "0614387088"));
         Tracker tracker = trackerDao.createNewTracker(new Tracker("1", 12, 13));
         Tracker tracker1 = trackerDao.createNewTracker(new Tracker("2", 15, 15));
         Tracker tracker2 = trackerDao.createNewTracker(new Tracker("3", 20, 20));

@@ -5,15 +5,29 @@
  */
 package domain;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
 /**
  *
  * @author ruthgervandeneikhof
  */
-public class StolenVehicle {
+@Entity
+@NamedQueries({
+    @NamedQuery(name="StolenVehicle.getAllSv", query="Select v from StolenVehicle v"),
+})
+public class StolenVehicle implements Serializable {
     String  ican;
+    @Id
     String  licenseplate;
     long    timestamp;
     boolean stolenValue;
+
+    public StolenVehicle() {
+    }
 
     public StolenVehicle(String ican, String licenseplate, long timestamp, boolean stolenValue) {
         this.ican = ican;
@@ -53,6 +67,4 @@ public class StolenVehicle {
     public void setStolenValue(boolean stolenValue) {
         this.stolenValue = stolenValue;
     }
-    
-    
 }

@@ -28,11 +28,11 @@ public class BeaconResource {
     BeaconService beaconService;
 
     @GET
-    @Path("GetMovementsPerIcan/{iCan}/{date}")
+    @Path("GetMovementsPerIcan/{iCan}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Beacon> getMovementPerIcan(@PathParam("iCan") String iCan, @PathParam("date") String date) {
+    public List<Beacon> getMovementPerIcan(@PathParam("iCan") String iCan) {
         try {
-            return beaconService.getAllRideByIcan(iCan, date);
+            return beaconService.getAllRideByIcan(iCan);
         } catch (Exception ex) {
             return null;
         }

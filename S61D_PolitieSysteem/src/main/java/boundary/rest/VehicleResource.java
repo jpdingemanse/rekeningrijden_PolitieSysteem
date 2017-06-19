@@ -5,7 +5,9 @@
  */
 package boundary.rest;
 
+import domain.StolenVehicle;
 import domain.Vehicle;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.naming.NamingException;
@@ -32,11 +34,16 @@ public class VehicleResource {
         return vehicleService.getVehicleByLicensePlate(licensePlate);
     }
     
+    @GET
+    @Path("GetAllStolenVehicles")
+    public List<StolenVehicle> getAllStolenVehicles(){
+        return vehicleService.getAllSv();
+    }
+    
     @POST
     @Path("createStolenVehicle")
     @Consumes("application/json")
     public Vehicle createStolenVehicle(Vehicle vehicle) throws NamingException, Exception{
-        vehicleService.createStolenVehicle(vehicle);
-        return vehicle;
+        return vehicleService.createStolenVehicle(vehicle);
     }
 }

@@ -11,8 +11,7 @@ import dao.VehicleDao;
 import domain.StolenVehicle;
 import domain.Vehicle;
 import factory.VehicleTransmitter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.naming.NamingException;
@@ -29,17 +28,24 @@ public class VehicleService {
     VehicleTransmitter vehicletm;
     Gson gson = new Gson();
     
-    public void createStolenVehicle(Vehicle vehicle) throws NamingException, Exception, Exception{
-        vehicleDao.createStolenVehicle(vehicle); 
-        // StolenVehicle sv = new StolenVehicle(vehicle.getOwner().getIcan(), vehicle.getLicensePlate(), System.currentTimeMillis(), true);
-        TopicConnector.sendMessage();
+    public Vehicle createStolenVehicle(Vehicle vehicle) throws NamingException, Exception, Exception{
+        Vehicle tempv = vehicleDao.createStolenVehicle(vehicle); 
+        tempv.setIsStolen(true);
+        StolenVehicle sv = vehicleDao.createEuropeStolen(new StolenVehicle(tempv.getiCan(), tempv.getLicensePlate(), System.currentTimeMillis(), true));
+        TopicConnector.sendMessage(gson.toJson(sv));
+        return tempv;
+    }
+    
+    public List<StolenVehicle> getAllSv(){
+        return vehicleDao.getAllStolenVehicles();
     }
     
     public Vehicle getVehicleByLicensePlate(String licensePlate) {
-        Vehicle vehicle = vehicleDao.getVehicleByLicensePlate(licensePlate);
+        Vehicle vehicle = vehicleDao.getVehicleByLicensePlate(licensePlate); 
         if(vehicle==null){
             vehicle = vehicletm.getVehicleByLicenseRekening(licensePlate);
-        }
+            vehicle.setIsStolen(false);
+        } 
         return vehicle;
     }    
 }

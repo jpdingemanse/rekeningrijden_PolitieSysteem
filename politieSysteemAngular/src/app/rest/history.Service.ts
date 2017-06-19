@@ -19,7 +19,7 @@ export class HistoryService {
     // }
 
     getHistoryByLicenseplate(license: String): Promise<History[]>{
-         return this.http.get(this.localurl + 'GetHistoryByLicensePlate/' + license)
+         return this.http.get(this.url + 'GetHistoryByLicensePlate/' + license)
                         .toPromise()
                         .then(this.extractData);
     }

@@ -35,11 +35,11 @@ import org.json.JSONObject;
 @Stateless
 public class VehicleTransmitter {
 
-public Vehicle getVehicleByLicenseRekening(String licenseplate){
+    public Vehicle getVehicleByLicenseRekening(String licenseplate) {
         StringBuilder result = new StringBuilder();
         Vehicle vehicle = null;
         try {
-            String url = "http://192.168.24.46:8080/S61D_RekeningAdministratie/api/Vehicle/GetVehicleByLicensePlate/" + licenseplate;
+            String url = "http://localhost:8080/S61D_RekeningAdministratie/api/Vehicle/GetVehicleByLicensePlate/" + licenseplate;
             HttpClient client = new DefaultHttpClient();
             HttpGet request = new HttpGet(url);
 
@@ -54,7 +54,7 @@ public Vehicle getVehicleByLicenseRekening(String licenseplate){
 
             BufferedReader rd = new BufferedReader(
                     new InputStreamReader(response.getEntity().getContent()));
-            
+
             Gson gson = new Gson();
             String line = "";
             while ((line = rd.readLine()) != null) {
@@ -69,20 +69,13 @@ public Vehicle getVehicleByLicenseRekening(String licenseplate){
         return vehicle;
     }
 
-public List<Beacon> GetAllMovementsByIcanAndDate(String ican, String date) {
+    public List<Beacon> GetAllMovements(String ican) {
         StringBuilder result = new StringBuilder();
         Beacon tempBeacon = null;
         List<Beacon> beacons = new ArrayList<>();
 
         try {
-            if (!date.contains("-")) {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date date2 = new Date();
-                date = dateFormat.format(date2);
-            }
-
-            String url = "http://192.168.24.42:8080/S61D_VerplaatsingSysteem/api/Beacon/GetMovementPerIcanAndDate/" + ican + "/" + date;
-
+            String url = "http://192.168.24.42:8080/S61D_VerplaatsingSysteem/api/Beacon/GetMovementPerIcan/" + ican;
             HttpClient client = new DefaultHttpClient();
             HttpGet request = new HttpGet(url);
 
@@ -91,39 +84,32 @@ public List<Beacon> GetAllMovementsByIcanAndDate(String ican, String date) {
 
             HttpResponse response = client.execute(request);
 
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : "
-                    + response.getStatusLine().getStatusCode());
-
             BufferedReader rd = new BufferedReader(
                     new InputStreamReader(response.getEntity().getContent()));
+
             Gson gson = new Gson();
             String line = "";
             while ((line = rd.readLine()) != null) {
                 result.append(line);
 
             }
-            System.out.println(result + "  test2");
+            System.out.println(result + "  test");
             JSONArray json = new JSONArray(result.toString());
             for (int i = 0; i < json.length(); i++) {
                 JSONObject temp = json.getJSONObject(i);
-                String tempican = temp.getString("ICAN");
+                String tempican = temp.getString("ican");
                 Double templat = temp.getDouble("latitude");
                 Double templon = temp.getDouble("longitude");
-                String tempdatetime = temp.getString("dateTime");
-                String signature = temp.getString("signature");
-                tempBeacon = new Beacon(tempican, templat, templon, tempdatetime, signature);
+                String tempdatetime = temp.getString("datetime");
+                tempBeacon = new Beacon(tempican, templat, templon, tempdatetime);
                 beacons.add(tempBeacon);
             }
 
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
             Logger.getLogger(Vehicle.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
-            System.out.println(ex.getMessage());
             Logger.getLogger(VehicleTransmitter.class.getName()).log(Level.SEVERE, null, ex);
         }
         return beacons;
     }
 }
-

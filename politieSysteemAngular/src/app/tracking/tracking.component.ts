@@ -18,10 +18,12 @@ export class TrackingPageComponent implements OnInit {
     }
     vehicleSearch : Vehicle;
     historySearch : History[];
+    movementList : Beacon[];
+    errorMessage : string;
     lat: number = 0;//51.452117;
-    lng: number = 0;//5.481302;
+    lng: number = 0;//5ng.481302;
 
-    constructor(private vehicleService : VehicleService) { }
+    constructor(private vehicleService : VehicleService, private beaconService : BeaconService) { }
 
     onclickSearch(license: String) {
         this.vehicleService.getVehicleByLicenseplate(license)
@@ -30,6 +32,17 @@ export class TrackingPageComponent implements OnInit {
             .then(() => { console.log(this.vehicleSearch)});
         this.lat = 51.452117;
         this.lng = 5.481302;
+        this.beaconService.GetMovementsPerIcan(this.vehicleSearch.ican)
+            .then(result => {
+        if (result.length != 0) {
+          this.errorMessage = " "
+          this.movementList = result
+          console.log(this.movementList)
+        } else {
+          this.errorMessage = "Niets gevonden voor dit filter"
+          this.movementList = []
+        }
+      })
     }
 }
 

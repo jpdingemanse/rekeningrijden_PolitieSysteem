@@ -23,15 +23,15 @@ public class History implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    @ManyToOne
-    Driver bestuurder;
     @Temporal(javax.persistence.TemporalType.DATE)
     Date overschrijfDatum;
+    @ManyToOne
+    private Vehicle vehicle;
     
     public History(){}
     
-    public History(Driver bestuurder, Date overschrijfDatum){
-        this.bestuurder = bestuurder;
+    public History(Vehicle bestuurder, Date overschrijfDatum){
+        this.vehicle = bestuurder;
         this.overschrijfDatum = overschrijfDatum;
     }
 
@@ -43,12 +43,12 @@ public class History implements Serializable{
         return id;
     }
     
-    public Driver getBestuurder() {
-        return bestuurder;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setBestuurder(Driver bestuurder) {
-        this.bestuurder = bestuurder;
+    public void setVehicle(Vehicle bestuurder) {
+        this.vehicle = bestuurder;
     }
 
     public Date getOverschrijfDatum() {

@@ -8,21 +8,23 @@ package service;
 import domain.Beacon;
 import factory.VehicleTransmitter;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  *
  * @author ruthgervandeneikhof
  */
+@Stateless
 public class BeaconService {
     @Inject
     VehicleTransmitter vt;
     
-    public  List<Beacon> getAllRideByIcan(String iCan, String date){
+    public  List<Beacon> getAllRideByIcan(String iCan){
 
         List<Beacon> tempResult = null;
         try {
-            tempResult =  vt.GetAllMovementsByIcanAndDate(iCan, date); 
+            tempResult =  vt.GetAllMovements(iCan); 
         } catch (Exception ex){
             System.out.println(ex.getMessage());
             return null;

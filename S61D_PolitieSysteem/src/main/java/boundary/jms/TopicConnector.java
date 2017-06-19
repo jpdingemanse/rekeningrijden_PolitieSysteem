@@ -31,32 +31,28 @@ import org.apache.activemq.broker.BrokerService;
 public class TopicConnector {
 
     private static final String JNDI_FACTORY = "jms/myConnectionFactory";
-    private static final String JNDI_Topic = "jms/TestTopic";
+    private static final String JNDI_Topic = "jms/StolenCarTopic";
 
-    public static void sendMessage() throws NamingException, URISyntaxException, Exception {
-        BrokerService broker = BrokerFactory.createBroker(new URI("broker:(tcp://localhost:61616)"));
-        broker.setPersistent(true);
-        broker.start();
+    public static void sendMessage(String text) throws NamingException, URISyntaxException, Exception {
         TopicConnection topicConnection = null;
 
         try {
             // Producer
-            TopicConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://192.168.24.41:61616");
+            TopicConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://192.168.24.38:61616");
             topicConnection = connectionFactory.createTopicConnection();   
             topicConnection.setClientID("JMSTOPIC");
  
             TopicSession topicConsumerSession = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);          
-            Topic topic = topicConsumerSession.createTopic("TESTTOPIC");
+            Topic topic = topicConsumerSession.createTopic("StolenCarTopic");
  
             
              topicConnection.start();
              
             // Publish
             TopicSession topicPublisherSession = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-            String payload = "Important Task";
-            Message msg = topicPublisherSession.createTextMessage(payload);
+            Message msg = topicPublisherSession.createTextMessage(text);
             TopicPublisher publisher = topicPublisherSession.createPublisher(topic);
-            System.out.println("Sending text '" + payload + "'");
+            System.out.println("Sending text '" + text + "'");
             publisher.publish(msg);
 
             Thread.sleep(3000);
@@ -70,7 +66,6 @@ public class TopicConnector {
             if (topicConnection != null) {
                 topicConnection.close();
             }
-            broker.stop();
         }
 
 

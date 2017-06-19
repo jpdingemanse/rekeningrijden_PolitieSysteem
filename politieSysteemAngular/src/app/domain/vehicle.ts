@@ -4,10 +4,11 @@ import { History } from "app/domain/history";
 
 export class Vehicle {
     public licensePlate: string;
+    public ican: string;
     public autorisatieCode: string;
     public owner: Driver;
     public tracker: Tracker;
-    public stolen: boolean;
+    public isStolen: boolean;
     public history: History[];
     constructor() { }
 
@@ -24,7 +25,7 @@ export class Vehicle {
         this.tracker = tracker;
     }
     setStolen(isStolen: boolean){
-        this.stolen = isStolen;
+        this.isStolen = isStolen;
     }
     setHistory(history: History[]){
         this.history = history;

@@ -4,6 +4,7 @@ import { Http, Response, Headers } from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 
 import { Vehicle } from './../domain/vehicle';
+import { StolenVehicle } from './../domain/stolenVehicle'
 
 @Injectable()
 export class VehicleService {
@@ -13,13 +14,13 @@ export class VehicleService {
     constructor(private http: Http) { }
 
     getAllVehicles(): Promise<Vehicle[]>{
-        return this.http.get(this.localurl + "GetAllVehicles")
+        return this.http.get(this.url + "GetAllVehicles")
             .toPromise()
             .then(this.extractData);
     }
 
     getVehicleByLicenseplate(license: String): Promise<Vehicle>{
-         return this.http.get(this.localurl + 'GetVehicleByLicensePlate/' + license)
+         return this.http.get(this.url + 'GetVehicleByLicensePlate/' + license)
                         .toPromise()
                         .then(this.extractData);
     }
@@ -27,8 +28,14 @@ export class VehicleService {
     setStolenVehicle(vehicle : Vehicle) : Promise<Vehicle>{
         var header = new Headers();
         header.append('Content-Type', 'application/json');
-        return this.http.post(this.localurl + 'createStolenVehicle', JSON.stringify(vehicle), { headers: header })
+        return this.http.post(this.url + 'createStolenVehicle', JSON.stringify(vehicle), { headers: header })
         .toPromise().then(this.extractData);
+    }
+
+    getAllStolenVehicles(): Promise<StolenVehicle[]>{
+        return this.http.get(this.url + "GetAllStolenVehicles")
+            .toPromise()
+            .then(this.extractData);
     }
 
     private extractData(res: Response) {

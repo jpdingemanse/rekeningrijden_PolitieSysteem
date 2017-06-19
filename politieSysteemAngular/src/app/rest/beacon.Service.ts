@@ -13,7 +13,7 @@ export class BeaconService {
     constructor(private http : Http){}
 
     GetMovementsPerIcan(ican: String): Promise<Beacon []> {
-        return this.http.get(this.localurl + "GetMovementsPerIcan/"+ ican)
+        return this.http.get(this.url + "GetMovementsPerIcan/"+ ican)
                         .toPromise()
                         .then(this.extractData);
     }

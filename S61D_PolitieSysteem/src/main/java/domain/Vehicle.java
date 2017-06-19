@@ -8,14 +8,13 @@ package domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,29 +22,33 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="vehicle.getByOwnerId", query="select v from Vehicle v where v.owner.id = :id")
+    @NamedQuery(name="vehicle.getByOwnerId", query="select v from Vehicle v where v.owner.id = :id"),
+    @NamedQuery(name="vehicle.getAllVehicles", query="select v from Vehicle v"),
+    @NamedQuery(name="vehicle.getVehicleByIcan", query="select v from Vehicle v where v.iCan = :iCan")
 })
 public class Vehicle implements Serializable{
     @Id
     private String licensePlate;
     private String autorisatieCode;
-    private boolean isStolen;
     @ManyToOne
     private Driver owner;
-    @OneToOne
-    @JoinColumn(name = "TrackerId")
-    private Tracker tracker;
-    @OneToMany
+    private String iCan;
+    private boolean isStolen;
+    @OneToMany(mappedBy = "vehicle",cascade = CascadeType.PERSIST)
     private List<History> history;
-    
+  
     public Vehicle() {
     }
 
-    public Vehicle(String licensePlate, Tracker tracker) {
+    public Vehicle(String licensePlate) {
         this.licensePlate = licensePlate;
-        this.tracker = tracker;
         this.history = new ArrayList();
-        this.isStolen = false;
+    }
+
+    public Vehicle(String licensePlate, String iCan) {
+        this.licensePlate = licensePlate;
+        this.iCan = iCan;
+        this.history = new ArrayList();
     }
 
     public String getAutorisatieCode() {
@@ -63,7 +66,7 @@ public class Vehicle implements Serializable{
     public void setIsStolen(boolean isStolen) {
         this.isStolen = isStolen;
     }
-    
+        
     public String getLicensePlate() {
         return licensePlate;
     }
@@ -79,15 +82,15 @@ public class Vehicle implements Serializable{
     public void setOwner(Driver owner) {
         this.owner = owner;
     }
+
+    public String getiCan() {
+        return iCan;
+    }
+
+    public void setiCan(String iCan) {
+        this.iCan = iCan;
+    }
     
-    public Tracker getTracker() {
-        return tracker;
-    }
-
-    public void setTracker(Tracker tracker) {
-        this.tracker = tracker;
-    }
-
     public List<History> getHistory() {
         return history;
     }

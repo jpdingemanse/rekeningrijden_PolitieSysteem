@@ -13,19 +13,19 @@ export class DriverService {
     constructor(private http : Http){}
 
     getDriverById(id : any) : Promise<Driver> {
-        return this.http.get(this.localurl + 'GetDriver/' + id)
+        return this.http.get(this.url + 'GetDriver/' + id)
                         .toPromise()
                         .then(this.extractData);
     }
     getDriverByFullName(name : string, lastname : string) : Promise<Driver []>{
-        return this.http.get(this.localurl + "GetDriverByName/" + name + '/'+ lastname)
+        return this.http.get(this.url + "GetDriverByName/" + name + '/'+ lastname)
                         .toPromise()
                         .then(this.extractData);
     }
     createNewDriver(driver : Driver) : Promise<Driver> {
         var header = new Headers();
         header.append('Content-Type', 'application/json');
-        return this.http.post(this.localurl + 'createNewDriver/', JSON.stringify(driver), {headers: header})
+        return this.http.post(this.url + 'createNewDriver/', JSON.stringify(driver), {headers: header})
                         .toPromise()
                         .then(this.extractData);
     }

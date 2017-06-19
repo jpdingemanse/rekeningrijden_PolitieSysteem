@@ -11,7 +11,7 @@ export class UserService {
     constructor(private http : Http){}
 
     getUserByUsernameAndPassword(username: String, password: String){
-         return this.http.get(this.localurl + 'GetUserByUsernameAndPassword/' + username +'/'+ password)
+         return this.http.get(this.url + 'GetUserByUsernameAndPassword/' + username +'/'+ password)
                         .toPromise()
                         .then(this.extractData);
     }
